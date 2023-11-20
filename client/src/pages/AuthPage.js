@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import Register from "../components/Register";
 import Login from "../components/Login";
 
-const AuthPage = () => {
+const AuthPage = ({setIsUser}) => {
     const [register,setRegister]=useState(false)
     const [login,setLogin]=useState(false)
 
@@ -15,7 +15,7 @@ const AuthPage = () => {
 
 
                      : login ?
-                            <Login setLogin={setLogin}/>
+                            <Login setLogin={setLogin} setIsUser={setIsUser}/>
 
                             :
 

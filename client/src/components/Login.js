@@ -4,7 +4,7 @@ import {useCookies} from "react-cookie";
 import {useNavigate} from "react-router-dom";
 
 
-const Login = ({setLogin}) => {
+const Login = ({setLogin,setIsUser}) => {
     const [username,setUsername] = useState("")
     const [password,setPassword] = useState("")
     const [_,setCookies ] = useCookies(["access-token"])
@@ -18,14 +18,16 @@ const Login = ({setLogin}) => {
             })
 
             setCookies("access_token",result.data.token)
+            console.log(_)
             localStorage.setItem("userId" , result.data.userId)
+            setIsUser(true)
 
             navigation("/")
 
 
 
 
-            alert("Registration Completed : Now Login")
+            alert("Login Completed : Now start shopping")
         }catch (e){
             console.log(e)
         }

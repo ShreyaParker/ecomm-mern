@@ -67,8 +67,11 @@ export const verifyToken=(req,res,next)=>{
             if(err){
                 res.json({message:err.message})
             }
+            next()
         })
-        next()
+
+    }else{
+        return res.sendStatus(401)
     }
 }
 
