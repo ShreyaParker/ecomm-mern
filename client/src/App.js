@@ -3,6 +3,7 @@ import Navbar from "./components/Navbar";
 import AuthPage from "./pages/AuthPage";
 import {useEffect, useState} from "react";
 import Homepage from "./pages/Homepage";
+import Checkout from "./pages/Checkout";
 
 function App() {
 
@@ -22,7 +23,7 @@ function App() {
           <Routes>
               <Route path="/" element={<Homepage/>}/>
               <Route path="/auth" element={<AuthPage setIsUser={setIsUser}/>} />
-              <Route path="/checkout"/>
+              <Route path="/checkout" element={<Checkout />}/>
               <Route path="/purchased-items"/>
           </Routes>
       </Router>

@@ -18,7 +18,7 @@ const Login = ({setLogin,setIsUser}) => {
             })
 
             setCookies("access_token",result.data.token)
-            console.log(_)
+
             localStorage.setItem("userId" , result.data.userId)
             setIsUser(true)
 

@@ -8,12 +8,16 @@ const Homepage = () => {
 
     return(
         <div>
+            <div className="flex flex-wrap flex-1 justify-center ">
+
             {
                 products.map((product)=>(
-                    <Product product={product} key={product._id}/>
+                      <Product product={product} key={product._id}/>
+
 
                 ))
             }
+            </div>
 
         </div>
     )

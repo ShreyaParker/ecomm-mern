@@ -10,7 +10,7 @@ const Register = ({setRegister}) => {
 
         try{
             const port = process.env.REACT_APP_PORT;
-            console.log(port)
+
             await axios.post(`http://localhost:${port}/user/register`, {username, password});
             alert("Registration Completed : Now Login")
         }catch (e){
