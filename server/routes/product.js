@@ -16,37 +16,39 @@ router.get("/",async (req,res)=>{
 
 })
 
-router.post("/checkout",verifyToken,async (req,res)=>{
-    const {customerID,cartItems}= req.body;
+router.post("/checkout",async (req,res)=>{
+    const { customerId, cartItems } = req.body;
     try {
-        const user = await UserModel.findById(customerID);
+        console.log(customerId)
+        const user = await UserModel.findOne({ _id: customerId });
+        console.log(user);
 
         const productIDs = Object.keys(cartItems);
         const products = await ProductModel.find({ _id: { $in: productIDs } });
 
         if (!user) {
-            return res.status(400).json({ type: ProductErrors.NO_USERS_FOUND });
+            return res.status(400).json({ message: "No user found." });
         }
         if (products.length !== productIDs.length) {
-            return res.status(400).json({ type: ProductErrors.NO_PRODUCT_FOUND });
+            return res.status(400).json({ message: "No product found." });
         }
 
         let totalPrice = 0;
         for (const item in cartItems) {
             const product = products.find((product) => String(product._id) === item);
             if (!product) {
-                return res.status(400).json({ type: ProductErrors.NO_PRODUCT_FOUND });
+                return res.status(400).json({ message:"no product2" });
             }
 
             if (product.stockQuantity < cartItems[item]) {
-                return res.status(400).json({ type: ProductErrors.NOT_ENOUGH_STOCK });
+                return res.status(400).json({ message:"no product3"  });
             }
 
             totalPrice += product.price * cartItems[item];
         }
 
         if (user.availableMoney < totalPrice) {
-            return res.status(400).json({ type: ProductErrors.NO_AVAILABLE_MONEY });
+            return res.status(400).json({ message:"no product4 "  });
         }
 
         user.availableMoney -= totalPrice;

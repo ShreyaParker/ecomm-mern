@@ -60,19 +60,36 @@ router.post("/login",async (req,res)=>{
 
 
 })
-export const verifyToken=(req,res,next)=>{
-    const authHeader = req.headers.authorization
-    if(authHeader){
-        jwt.verify(authHeader,process.env.SECRET,(err)=>{
-            if(err){
-                res.json({message:err.message})
-            }
-            next()
-        })
 
-    }else{
-        return res.sendStatus(401)
+
+export const verifyToken = (req, res, next) => {
+    const authHeader = req.headers.authorization;
+    if (authHeader) {
+        jwt.verify(authHeader, "secret", (err) => {
+            if (err) {
+                return res.sendStatus(403);
+            }
+            next();
+        });
+    } else {
+        res.sendStatus(401);
     }
-}
+};
+router.get("/available-money/:userID",verifyToken , async (req,res)=>{
+    const {userID}= req.params
+    console.log(userID)
+    try {
+        const user = await UserModel.findById(userID)
+
+        if(!user){
+            res.status(400).json({message:"user not found"})
+        }
+
+        res.json({availableMoney:user.availableMoney})
+    } catch (e) {
+        res.status(500).json({message:e.message})
+    }
+})
+
 
 export { router as userRouter };

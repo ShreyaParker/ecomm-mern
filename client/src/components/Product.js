@@ -1,14 +1,21 @@
 import React, {useContext, useEffect, useState} from 'react';
 
 import {ShopContext} from "../context/shopContext";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faStar} from "@fortawesome/free-solid-svg-icons/faStar";
 
 
 const Product = ({product}) => {
+    const { rating } = product;
+
+
 
     const {_id} = product
 
-    const {addToCart,getCartItemCount} = useContext(ShopContext)
+    const {addToCart,removeFromCart,getCartItemCount} = useContext(ShopContext)
     const count = getCartItemCount(_id)
+
+
 
 
 
@@ -25,7 +32,20 @@ const Product = ({product}) => {
             <h1>
                 ${product.price}
             </h1>
+            <i>
+                {Array.from({ length: rating }, (_, index) => (
+                    <FontAwesomeIcon key={index} icon={faStar} />
+                ))}
+            </i>
             <div className={"flex flex-row gap-2 border-2 border-cyan-500 rounded px-2"}>
+                {
+
+                    count > 0 &&
+                    <div className={"flex flex-row gap-2"}><button onClick={()=>removeFromCart(_id)}>
+                        -
+                    </button> </div>
+                }
+
                 {
                     count > 0 && <p>{count}</p>
                 }

@@ -1,15 +1,18 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import axios from "axios";
+import {ShopContext} from "../context/shopContext";
 
 const Register = ({setRegister}) => {
     const [username,setUsername] = useState("")
     const [password,setPassword] = useState("")
 
+    const port = process.env.REACT_APP_PORT
+
     const handleSubmit = async (e) =>{
         e.preventDefault()
 
         try{
-            const port = process.env.REACT_APP_PORT;
+
 
             await axios.post(`http://localhost:${port}/user/register`, {username, password});
             alert("Registration Completed : Now Login")
